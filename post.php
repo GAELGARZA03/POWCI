@@ -106,10 +106,14 @@ if (!$es_admin && (empty($mundiales) || empty($categorias))) {
 
     <section>
         <h3>🌍 Crear nuevo mundial</h3>
-        <form action="crearmundial.php" method="POST">
+        <form action="crearmundial.php" method="POST" enctype="multipart/form-data">
             <input type="number" name="anio" placeholder="Año" required>
             <input type="text" name="sede" placeholder="Sede" required>
             <input type="text" name="campeon" placeholder="Campeón">
+            
+            <label style="display:block; margin: 10px 0 5px; color:var(--verde-menta); font-size:0.9em;">Logotipo del Mundial:</label>
+            <input type="file" name="logo" accept="image/*">
+            
             <textarea name="descripcion" placeholder="Descripción"></textarea>
             <button type="submit"><span class="material-symbols-outlined">add</span> Crear mundial</button>
         </form>

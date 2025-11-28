@@ -2,13 +2,11 @@
 session_start();
 include('conexion.php');
 
-// 1. Inicializar array de vistas si no existe
+// 1. Inicializar array de vistas
 if (!isset($_SESSION['viewed_posts'])) {
     $_SESSION['viewed_posts'] = [];
 }
 
-// 2. Obtener datos del usuario actual
-// Si no hay sesión, esto será 0
 $id_usuario_sesion = $_SESSION['id_usuario'] ?? 0; 
 $es_admin = false;
 
@@ -24,13 +22,14 @@ if ($id_usuario_sesion > 0) {
     $stmt->close();
 }
 
-// 3. Recibir Filtros (AJAX)
+// --- FILTROS RECIBIDOS ---
 $busqueda = $_POST['busqueda'] ?? '';
 $orden = $_POST['orden'] ?? 'cronologico';
+$filtro_mundial = $_POST['id_mundial'] ?? ''; // <--- NUEVO FILTRO
 
-// 4. Construir la Consulta SQL Dinámica
+// Construcción SQL
 $sql_base = "SELECT p.id_publicacion, p.titulo, p.id_categoria, c.nombre AS categoria, p.contenido,
-               p.media_path, p.tipo_contenido, p.fecha_publicacion, p.fecha_aprobacion, p.estado_publicacion,
+               p.media_path, p.tipo_contenido, p.fecha_publicacion, p.estado_publicacion,
                u.nombre_completo AS autor, u.foto_perfil, 
                CONCAT(m.sede, ' ', m.anio) AS nombre_mundial, m.sede, m.anio,
                COALESCE(r.total_likes, 0) AS total_likes,
@@ -56,16 +55,19 @@ $sql_base = "SELECT p.id_publicacion, p.titulo, p.id_categoria, c.nombre AS cate
             SELECT id_publicacion, COUNT(*) AS total_comentarios
             FROM comentarios GROUP BY id_publicacion
         ) comm ON p.id_publicacion = comm.id_publicacion
-        LEFT JOIN reacciones r_user ON p.id_publicacion = r_user.id_publicacion AND r_user.id_usuario = $id_usuario_sesion
+        LEFT JOIN reacciones r_user ON p.id_publicacion = r_user.id_publicacion AND r_user.id_usuario = ?
         WHERE 1=1 "; 
+
+// Array de parámetros dinámicos
+// El primer parámetro es el ID de usuario para el LEFT JOIN de reacciones
+$params = [$id_usuario_sesion]; 
+$types = "i"; 
 
 if (!$es_admin) {
     $sql_base .= " AND p.estado_publicacion = 'aprobada' ";
 }
 
-$params = [];
-$types = "";
-
+// Filtro de Búsqueda
 if (!empty($busqueda)) {
     $termino = "%" . $busqueda . "%";
     $sql_base .= " AND (p.titulo LIKE ? OR c.nombre LIKE ? OR m.anio LIKE ? OR m.sede LIKE ? OR u.nombre_completo LIKE ?) ";
@@ -73,6 +75,14 @@ if (!empty($busqueda)) {
     $types .= "sssss";
 }
 
+// Filtro por ID MUNDIAL (Nuevo)
+if (!empty($filtro_mundial)) {
+    $sql_base .= " AND p.id_mundial = ? ";
+    array_push($params, $filtro_mundial);
+    $types .= "i";
+}
+
+// Ordenamiento
 switch ($orden) {
     case 'mundial_cronologico':
         $sql_base .= " ORDER BY m.anio ASC, p.fecha_publicacion DESC";
@@ -99,34 +109,22 @@ if (!empty($params)) {
 $stmt->execute();
 $resultado = $stmt->get_result();
 
-// 5. Generar HTML
+// Generar HTML
 if ($resultado && $resultado->num_rows > 0):
     while ($post = $resultado->fetch_assoc()):
         
-        // =====================================================
-        // CORRECCIÓN: Registrar vista manejando usuario NULL
-        // =====================================================
+        // Registrar vista
         $id_post_actual = $post['id_publicacion'];
-        
         if (!in_array($id_post_actual, $_SESSION['viewed_posts'])) {
-            
-            // Si es 0 (no logueado), ponemos NULL para que MySQL no se queje
             $id_usuario_para_bd = ($id_usuario_sesion > 0) ? $id_usuario_sesion : null;
-
             $sql_vista = "INSERT INTO vistas (id_publicacion, id_usuario, fecha_vista) VALUES (?, ?, NOW())";
             $stmt_vista = $conn->prepare($sql_vista);
-            
-            // 'i' para id_publicacion, 'i' para id_usuario (acepta null)
             $stmt_vista->bind_param("ii", $id_post_actual, $id_usuario_para_bd);
-            
             $stmt_vista->execute();
             $stmt_vista->close();
-            
             $_SESSION['viewed_posts'][] = $id_post_actual;
             $post['total_vistas']++; 
         }
-        // =====================================================
-        
         $reaccion_actual_usuario = $post['reaccion_usuario'];
 ?>
     <section style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
@@ -151,19 +149,14 @@ if ($resultado && $resultado->num_rows > 0):
 
         <?php if (!empty($post['media_path'])): 
             $media = htmlspecialchars($post['media_path']);
-            
             if ($post['tipo_contenido'] === 'imagen'): ?>
                 <img src='<?= $media ?>' width='100%' style='max-width: 500px; display: block; margin: 15px auto; border-radius: 10px;'>
-            
             <?php elseif ($post['tipo_contenido'] === 'video'): ?>
                 <video src='<?= $media ?>' width='100%' style='max-width: 500px; display: block; margin: 15px auto; border-radius: 10px;' controls></video>
-            
             <?php elseif ($post['tipo_contenido'] === 'video_link'): 
-                // Convertir URL normal de YouTube a Embed
                 $video_url = $media;
                 if (strpos($video_url, 'watch?v=') !== false) {
                     $video_url = str_replace("watch?v=", "embed/", $video_url);
-                    // Limpiar parámetros extra (como &t=...)
                     $parts = explode('&', $video_url);
                     $video_url = $parts[0];
                 } elseif (strpos($video_url, 'youtu.be/') !== false) {
@@ -211,7 +204,6 @@ if ($resultado && $resultado->num_rows > 0):
         <h4 style="display:flex; align-items:center;"><span class="material-symbols-outlined">forum</span> Comentarios:</h4>
         <div class="lista-comentarios" style="margin-bottom: 15px; max-height: 200px; overflow-y: auto; padding: 5px;">
             <?php
-            // (Tu SQL de comentarios sigue igual)
             $sql_com = "SELECT c.id_comentario, c.contenido, c.fecha_comentario, u.nombre_completo, u.foto_perfil 
                         FROM comentarios c JOIN usuarios u ON c.id_usuario = u.id_usuario
                         WHERE c.id_publicacion = ? ORDER BY c.fecha_comentario ASC";
@@ -250,19 +242,11 @@ if ($resultado && $resultado->num_rows > 0):
         <?php else: ?>
             <p><a href="login.php" style="color: var(--verde-menta);">Inicia sesión</a> para comentar.</p>
         <?php endif; ?>
-
-        <?php if ($es_admin && $post['estado_publicacion']=='pendiente'): ?>
-            <form action="moderar.php" method="POST" style="margin-top:10px; border-top: 1px solid var(--verde-suave); padding-top: 10px;">
-                <input type="hidden" name="id_publicacion" value="<?= $post['id_publicacion'] ?>">
-                <button type="submit" name="accion" value="aprobar"><span class="material-symbols-outlined">check</span> Aprobar</button>
-                <button type="submit" name="accion" value="rechazar"><span class="material-symbols-outlined">close</span> Rechazar</button>
-            </form>
-        <?php endif; ?>
     </section>
 <?php
     endwhile;
 else:
-    echo "<p style='text-align:center; margin-top:20px;'>No se encontraron publicaciones con esos filtros.</p>";
+    echo "<p style='text-align:center; margin-top:20px; color:var(--gris);'>No se encontraron publicaciones.</p>";
 endif;
 $conn->close();
 ?>
