@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+  --verde-oscuro: #0d2818;
+  --verde-suave: #1e3b27;
+  --verde-menta: #71f79f;
+  --verde-pastel: #b9fbc0;
+  --blanco-suave: #f4f9f4;
+  --gris: #9ab3a0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top left, var(--verde-oscuro), var(--verde-suave));
+  color: var(--blanco-suave);
+  text-align: center;
+  min-height: 100vh;
+}
+
+/* Encabezado */
+h1 {
+  font-size: 2.5rem;
+  margin-top: 30px;
+  letter-spacing: 2px;
+  color: var(--verde-pastel);
+  text-shadow: 0 0 10px rgba(113, 247, 159, 0.5);
+}
+
+/* Botones generales */
+button, input[type="submit"] {
+  background-color: var(--verde-menta);
+  border: none;
+  color: var(--verde-oscuro);
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover, input[type="submit"]:hover {
+  background-color: var(--verde-pastel);
+  transform: scale(1.05);
+}
+
+/* Barra superior (perfil + búsqueda + crear post) */
+form, a {
+  display: inline-block;
+  margin: 10px;
+}
+
+form {
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 10px 20px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+input[type="text"] {
+  background: transparent;
+  border: 1px solid var(--verde-menta);
+  border-radius: 8px;
+  color: var(--blanco-suave);
+  padding: 6px 10px;
+  outline: none;
+  transition: 0.2s;
+}
+
+input[type="text"]:focus {
+  border-color: var(--verde-pastel);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Publicaciones */
+section {
+  width: 90%;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 30px auto;
+  padding: 20px 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(113, 247, 159, 0.1);
+  text-align: left;
+  backdrop-filter: blur(4px);
+}
+
+section h2 {
+  color: var(--verde-pastel);
+  text-shadow: 0 0 5px rgba(113, 247, 159, 0.3);
+}
+
+section p {
+  color: var(--gris);
+  line-height: 1.5;
+}
+
+section img, section video {
+  display: block;
+  margin: 15px auto;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(113, 247, 159, 0.2);
+}
+
+/* Comentarios */
+h3 {
+  margin-top: 20px;
+  color: var(--verde-menta);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  background-color: rgba(255, 255, 255, 0.05);
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: var(--blanco-suave);
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ul li strong {
+  color: var(--verde-pastel);
+}
+
+ul li button {
+  background-color: transparent;
+  color: var(--verde-pastel);
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+ul li button:hover {
+  transform: scale(1.2);
+}
+
+/* Separadores */
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--verde-menta), transparent);
+  margin: 40px auto;
+  width: 60%;
+  opacity: 0.5;
+}

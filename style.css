@@ -1,0 +1,496 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+  --verde-oscuro: #0d2818;
+  --verde-suave: #1e3b27;
+  --verde-menta: #71f79f;
+  --verde-pastel: #b9fbc0;
+  --blanco-suave: #f4f9f4;
+  --gris: #9ab3a0;
+}
+
+/* === PERFIL DE USUARIO - Universo Futbolero === */
+
+/* --- GENERAL --- */
+body {
+  /* background-color: #f4f7fb; */ /* Reemplazado */
+  background: radial-gradient(circle at top left, var(--verde-oscuro), var(--verde-suave));
+  /* font-family: 'Segoe UI', Tahoma, sans-serif; */ /* Reemplazado */
+  font-family: 'Poppins', sans-serif;
+  /* color: #222; */ /* Reemplazado */
+  color: var(--blanco-suave);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh; /* Añadido para fondo completo */
+}
+
+h1 {
+  text-align: center;
+  /* color: #005fa3; */ /* Reemplazado */
+  color: var(--verde-pastel);
+  margin-top: 20px;
+  text-shadow: 0 0 10px rgba(113, 247, 159, 0.5); /* Añadido */
+}
+
+form, section {
+  width: 90%;
+  max-width: 800px;
+  /* background: #ffffff; */ /* Reemplazado */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px); /* Añadido */
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 20px;
+  /* box-shadow: 0 3px 10px rgba(0,0,0,0.1); */ /* Reemplazado */
+  box-shadow: 0 0 15px rgba(113, 247, 159, 0.1);
+}
+
+/* --- FORMULARIOS --- */
+form label {
+  font-weight: bold;
+  /* color: #333; */ /* Reemplazado */
+  color: var(--gris);
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  /* border: 1px solid #ccc; */ /* Reemplazado */
+  border: 1px solid var(--verde-menta);
+  font-size: 14px;
+  /* background-color: #fafafa; */ /* Reemplazado */
+  background-color: transparent;
+  color: var(--blanco-suave); /* Añadido */
+  outline: none; /* Añadido */
+}
+
+/* Estilo de focus del CSS deseado */
+form input:focus,
+form select:focus,
+form textarea:focus {
+  border-color: var(--verde-pastel);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+form button {
+  /* background-color: #0079d3; */ /* Reemplazado */
+  background-color: var(--verde-menta);
+  /* color: white; */ /* Reemplazado */
+  color: var(--verde-oscuro);
+  font-weight: 600; /* Añadido */
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s ease; /* Transición actualizada */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+form button:hover {
+  /* background-color: #005fa3; */ /* Reemplazado */
+  background-color: var(--verde-pastel);
+  transform: scale(1.05); /* Añadido */
+}
+
+/* --- PUBLICACIONES --- */
+section h2 {
+  text-align: center;
+  /* color: #005fa3; */ /* Reemplazado */
+  color: var(--verde-pastel);
+  margin-bottom: 15px;
+}
+
+section > div {
+  /* background: #f9fbff; */ /* Reemplazado */
+  background: rgba(255, 255, 255, 0.05);
+  /* border: 1px solid #dbe3f0; */ /* Reemplazado */
+  border: 1px solid var(--verde-suave);
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  /* box-shadow: 0 2px 6px rgba(0,0,0,0.05); */ /* Reemplazado */
+  box-shadow: 0 0 10px rgba(113, 247, 159, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+section > div:hover {
+  transform: translateY(-3px);
+  /* box-shadow: 0 4px 10px rgba(0,0,0,0.1); */ /* Reemplazado */
+  box-shadow: 0 4px 10px rgba(113, 247, 159, 0.2);
+}
+
+section h3 {
+  /* color: #003d6b; */ /* Reemplazado */
+  color: var(--verde-menta);
+  margin-bottom: 8px;
+}
+
+section p {
+  line-height: 1.5;
+  /* color: #333; */ /* Reemplazado */
+  color: var(--gris);
+}
+
+/* --- COMENTARIOS --- */
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ul li {
+  /* background-color: #e9f3ff; */ /* Reemplazado */
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+ul li strong {
+  /* color: #005fa3; */ /* Reemplazado */
+  color: var(--verde-pastel);
+}
+
+/* --- BOTONES INFERIORES --- */
+a button {
+  /* background-color: #444; */ /* Reemplazado */
+  background-color: var(--verde-menta);
+  /* color: white; */ /* Reemplazado */
+  color: var(--verde-oscuro);
+  font-weight: 600; /* Añadido */
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s ease; /* Transición actualizada */
+}
+
+a button:hover {
+  /* background-color: #222; */ /* Reemplazado */
+  background-color: var(--verde-pastel);
+  transform: scale(1.05); /* Añadido */
+}
+
+/* --- CABECERA UNIVERSO FUTBOLERO --- */
+h1:first-of-type {
+  font-size: 28px;
+  /* color: #004d85; */ /* Reemplazado */
+  color: var(--verde-pastel);
+  margin-top: 25px;
+}
+
+/* --- BUSCADOR --- */
+form[action="buscar.php"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  /* Mantenemos el fondo transparente y sin sombra */
+  box-shadow: none;
+  background: transparent;
+}
+
+form[action="buscar.php"] label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: normal;
+}
+
+form[action="buscar.php"] input[type="text"] {
+  width: 300px;
+  /* border: 1px solid #ccc; */ /* Reemplazado */
+  border: 1px solid var(--verde-menta);
+  background: transparent; /* Añadido */
+  color: var(--blanco-suave); /* Añadido */
+  padding: 6px 10px; /* Añadido */
+  border-radius: 8px; /* Añadido */
+  outline: none; /* Añadido */
+}
+
+/* Focus para el buscador */
+form[action="buscar.php"] input[type="text"]:focus {
+  border-color: var(--verde-pastel);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+form[action="buscar.php"] input[type="submit"] {
+  /* background-color: #0079d3; */ /* Reemplazado */
+  background-color: var(--verde-menta);
+  /* color: white; */ /* Reemplazado */
+  color: var(--verde-oscuro);
+  font-weight: 600; /* Añadido */
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease; /* Transición actualizada */
+}
+
+form[action="buscar.php"] input[type="submit"]:hover {
+  /* background-color: #005fa3; */ /* Reemplazado */
+  background-color: var(--verde-pastel);
+  transform: scale(1.05); /* Añadido */
+}
+
+/* --- RESPONSIVO --- */
+@media (max-width: 600px) {
+  form, section {
+    width: 95%;
+    padding: 15px;
+  }
+
+  form[action="buscar.php"] input[type="text"] {
+    width: 100%;
+  }
+}
+
+/* === ESTILOS PARA MENSAJES DE ALERTA (AÑADIDO) === */
+.alerta {
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 8px;
+    font-weight: 600;
+    width: 90%;
+    max-width: 800px;
+    box-sizing: border-box; /* Para que el padding no rompa el ancho */
+}
+
+.alerta.exito {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.alerta.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+/* --- ESTILOS ADICIONALES PARA ALERTAS ANIMADAS --- */
+
+/* 1. Hacemos la alerta "relativa" para poner la barra adentro */
+.alerta {
+    position: relative;
+    overflow: hidden; /* Oculta la barra de progreso si se sale */
+    opacity: 1;
+    transform: translateY(0);
+    /* Transición para que aparezca y desaparezca suave */
+    transition: opacity 0.5s ease-in, transform 0.5s ease-in, color 0.5s ease-in;
+}
+
+/* 2. La barra de progreso (usa un pseudo-elemento) */
+.alerta::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px; /* Altura de la barra */
+    width: 100%;
+    
+    /* Color de la barra (un poco más oscuro que el fondo) */
+    background-color: rgba(0, 0, 0, 0.2); 
+    
+    /* La animación de 5 segundos */
+    animation: countdown 5s linear forwards;
+}
+
+/* 3. La animación que acorta la barra de 100% a 0% */
+@keyframes countdown {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0%;
+    }
+}
+
+/* 4. Clase que pondremos con JavaScript para desvanecer */
+.alerta.fade-out {
+    opacity: 0;
+    transform: translateY(-20px); /* Sutil animación hacia arriba */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, color 0.5s ease-out;
+}
+
+/* AÑADE ESTO AL FINAL DE TU CSS */
+
+.alerta.exito.fade-out {
+    color: #d4edda; /* Se difumina al color de fondo de 'exito' */
+}
+.alerta.error.fade-out {
+    color: #f8d7da; /* Se difumina al color de fondo de 'error' */
+}
+
+
+/* --- ARREGLO PARA COMBOBOX (SELECT) --- */
+
+/*
+  Esto fuerza a que el TEXTO de las opciones
+  sea negro, para que se vea en el fondo blanco
+  que pone el navegador.
+*/
+form select option {
+    color: #000; 
+}
+
+#orden-ajax option{
+  color: #000;
+}
+
+/* --- ESTILOS DE FILTROS Y LAYOUT (INDEX) --- */
+
+/* Contenedor de la barra de búsqueda y filtros */
+.filtros-container {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(113, 247, 159, 0.2);
+    padding: 15px 25px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    /* Centrado y ancho máximo */
+    max-width: 1100px; 
+    margin: 0 auto 20px auto;
+    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Inputs y Selects dentro de filtros */
+.filtros-container select, .filtros-container input {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--verde-menta);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    outline: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.filtros-container select:focus, .filtros-container input:focus {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(113, 247, 159, 0.3);
+}
+
+.filtros-container input::placeholder { 
+    color: rgba(255, 255, 255, 0.6); 
+}
+
+.filtros-container label {
+    color: var(--verde-pastel);
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Sidebar de Noticias (API) */
+.sidebar-api {
+    background: rgba(13, 40, 24, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid var(--verde-suave);
+    position: sticky; 
+    top: 20px; 
+    height: fit-content;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    min-width: 250px; 
+}
+
+/* Botones de Reacción (Like/Dislike) */
+.form-reaccion { 
+    display: inline-block; 
+}
+
+.btn-reaccion {
+    background: none; 
+    border: none; 
+    color: var(--gris);
+    cursor: pointer; 
+    font-size: 0.9em; 
+    padding: 0 5px;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.btn-reaccion:hover { 
+    transform: scale(1.1); 
+}
+
+.reaccion-activa { 
+    color: var(--verde-menta); 
+    font-weight: bold; 
+}
+
+/* Botón de borrar comentario (Admin) */
+.btn-borrar-comentario {
+    background: none; 
+    border: none; 
+    cursor: pointer;
+    font-size: 0.8rem; 
+    opacity: 0.6; 
+    transition: 0.2s;
+    margin-left: auto;
+}
+
+.btn-borrar-comentario:hover { 
+    opacity: 1; 
+    transform: scale(1.2); 
+}
+
+/* --- ESTILOS PARA ICONOS DE GOOGLE (MATERIAL SYMBOLS) --- */
+.material-symbols-outlined {
+    font-size: 20px !important; /* Tamaño profesional */
+    vertical-align: middle;     /* Alineado con el texto */
+    margin-right: 5px;          /* Espacio entre icono y texto */
+    position: relative;
+    top: -2px;                  /* Ajuste fino de altura */
+}
+
+/* --- LAYOUT PRINCIPAL (ADMIN VS USUARIO) --- */
+
+.contenido-principal {
+    margin-top: 20px;
+    align-items: start;
+}
+
+/* Clase para cuando es ADMIN (Una sola columna centrada) */
+.layout-admin {
+    display: block;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Clase para cuando es USUARIO (Grid con barra lateral) */
+.layout-usuario {
+    display: grid;
+    grid-template-columns: 3fr 1.2fr; /* Columna ancha + Columna angosta */
+    gap: 25px;
+    max-width: 1100px;
+    margin: 20px auto;
+}
+
+/* Aseguramos que en móviles se vea todo en una columna */
+@media (max-width: 768px) {
+    .layout-usuario {
+        grid-template-columns: 1fr;
+    }
+    .sidebar-api {
+        position: static; /* Quitar sticky en móvil */
+    }
+}
