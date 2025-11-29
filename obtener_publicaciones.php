@@ -25,7 +25,7 @@ if ($id_usuario_sesion > 0) {
 // --- FILTROS RECIBIDOS ---
 $busqueda = $_POST['busqueda'] ?? '';
 $orden = $_POST['orden'] ?? 'cronologico';
-$filtro_mundial = $_POST['id_mundial'] ?? ''; // <--- NUEVO FILTRO
+$filtro_mundial = $_POST['id_mundial'] ?? ''; 
 
 // Construcción SQL
 $sql_base = "SELECT p.id_publicacion, p.titulo, p.id_categoria, c.nombre AS categoria, p.contenido,
@@ -59,7 +59,6 @@ $sql_base = "SELECT p.id_publicacion, p.titulo, p.id_categoria, c.nombre AS cate
         WHERE 1=1 "; 
 
 // Array de parámetros dinámicos
-// El primer parámetro es el ID de usuario para el LEFT JOIN de reacciones
 $params = [$id_usuario_sesion]; 
 $types = "i"; 
 
@@ -75,7 +74,7 @@ if (!empty($busqueda)) {
     $types .= "sssss";
 }
 
-// Filtro por ID MUNDIAL (Nuevo)
+// Filtro por ID MUNDIAL
 if (!empty($filtro_mundial)) {
     $sql_base .= " AND p.id_mundial = ? ";
     array_push($params, $filtro_mundial);
@@ -242,6 +241,15 @@ if ($resultado && $resultado->num_rows > 0):
         <?php else: ?>
             <p><a href="login.php" style="color: var(--verde-menta);">Inicia sesión</a> para comentar.</p>
         <?php endif; ?>
+
+        <?php if ($es_admin && $post['estado_publicacion']=='pendiente'): ?>
+            <form action="moderar.php" method="POST" style="margin-top:10px; border-top: 1px solid var(--verde-suave); padding-top: 10px;">
+                <input type="hidden" name="id_publicacion" value="<?= $post['id_publicacion'] ?>">
+                <button type="submit" name="accion" value="aprobar" style="background:var(--verde-menta); color:black; padding:5px 10px; font-size:14px;"><span class="material-symbols-outlined" style="font-size:16px;">check</span> Aprobar</button>
+                <button type="submit" name="accion" value="rechazar" style="background:#d32f2f; color:white; padding:5px 10px; font-size:14px;"><span class="material-symbols-outlined" style="font-size:16px;">close</span> Rechazar</button>
+            </form>
+        <?php endif; ?>
+
     </section>
 <?php
     endwhile;

@@ -2,7 +2,8 @@
 session_start();
 include('conexion.php');
 
-$redirect_page = 'index.php';
+// Redirigir de vuelta a la misma página (index o mundiales)
+$redirect_page = $_SERVER['HTTP_REFERER'] ?? 'index.php';
 
 // Verificar que haya sesión
 if (!isset($_SESSION['id_usuario'])) {
@@ -30,13 +31,11 @@ if ($user['rol'] !== 'admin') {
     exit();
 }
 
-// Verificar método POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: $redirect_page");
     exit();
 }
 
-// Obtener datos
 $id_publicacion = intval($_POST['id_publicacion'] ?? 0);
 $accion = $_POST['accion'] ?? '';
 
@@ -46,7 +45,6 @@ if ($id_publicacion <= 0 || !in_array($accion, ['aprobar','rechazar'])) {
     exit();
 }
 
-// Ejecutar acción
 if ($accion === 'aprobar') {
     $sql_update = "UPDATE publicaciones SET estado_publicacion='aprobada', fecha_aprobacion=NOW() WHERE id_publicacion=?";
 } else {
